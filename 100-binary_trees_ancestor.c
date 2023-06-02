@@ -17,8 +17,14 @@ const binary_tree_t *second)
 
 	if (binary_tree_search(first, second) == 1)
 	{
-		(first->left != NULL) ? return (first->left->parent)
-		: return (first->right->parent);
+		if (first->left != NULL)
+		{
+			return (first->left->parent);
+		}
+		else
+		{
+			return (first->right->parent);
+		}
 	}
 	if (binary_tree_search(second, first) == 1)
 	{
