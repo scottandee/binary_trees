@@ -9,25 +9,20 @@
   * the two given nodes
   */
 
-binary_tree_t *binary_trees_ancestor(const binary_tree_t *first, const binary_tree_t *second)
+binary_tree_t *binary_trees_ancestor(const binary_tree_t *first,
+const binary_tree_t *second)
 {
 	binary_tree_t *temp;
 	int res;
 
 	if (binary_tree_search(first, second) == 1)
 	{
-		if(first->left != NULL)
-		{
-			return (first->left->parent);
-		}
-		else
-		{
-			return (first->right->parent);
-		}
+		(first->left != NULL) ? return (first->left->parent)
+		: return (first->right->parent);
 	}
 	if (binary_tree_search(second, first) == 1)
 	{
-		if(second->left != NULL)
+		if (second->left != NULL)
 		{
 			return (second->left->parent);
 		}
@@ -38,23 +33,9 @@ binary_tree_t *binary_trees_ancestor(const binary_tree_t *first, const binary_tr
 	}
 
 	temp = first->parent;
-	if (first->parent->left == first)
-	{
-		res = binary_tree_search(first->parent->right, second);
-	}
-	else
-	{
-		res = binary_tree_search(first->parent->left, second);
-	}
-	if (res == 1)
-	{
-		return (first->parent);
-	}
-
-
 	while (res != 1 || temp != NULL)
 	{
-		if (temp->left == first)
+		if (first->parent->left == first)
 		{
 			res = binary_tree_search(temp->right, second);
 		}
@@ -62,23 +43,28 @@ binary_tree_t *binary_trees_ancestor(const binary_tree_t *first, const binary_tr
 		{
 			res = binary_tree_search(temp->left, second);
 		}
-		if (res != 1)
+		if (res == 1)
 		{
-			temp = temp->parent;
+			return (temp);
 		}
+		temp = temp->parent;
 	}
 
-	if (res == 1)
-	{
-		return (temp);
-	}
 	return (NULL);
-}	
+}
 
+/**
+  * binary_tree_search - this function searches through a binary tree to
+  * see if a particular node exists
+  *
+  * @first: this is the binary tree to search
+  * @second: this is the node we're looking for
+  * Return: this returns 1 if found and 0 if not found
+  */
 int binary_tree_search(const binary_tree_t *first, const binary_tree_t *second)
 {
 	int left, right;
-	
+
 	if (first == NULL)
 	{
 		return (0);
